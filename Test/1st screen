@@ -1,0 +1,37 @@
+from tkinter import *
+
+window = Tk()
+window.rowconfigure(0, weight=1)
+window.columnconfigure(0, weight=1)
+window.geometry("1500x700")
+
+#Making the Pages of the program
+page1 = Frame(window)
+page2 = Frame(window)
+
+for frame in (page1, page2):
+    frame.grid(row=0, column=0, sticky='nsew')
+
+def show_frame(frame):
+    frame.tkraise()
+
+bg = PhotoImage(file="C:\Battleships.png")
+
+show_frame(page1)
+page1.config(background='dark green')
+pag2_label = Label(page1, text='Baseball Scoring System', font=('Garamond', 30, 'bold'),fg="black")
+pag2_label.place(relx=0.355, rely=0)
+
+b= Button(page1, text = "START", command=lambda: show_frame(page2),font=('Garamond', 13, 'bold'),height=5,width=19)
+b.pack()
+b.focus()
+b.place(relx=0.39, rely=0.30)
+
+pg3_button = Button(page2, text='Back', font=('Arial', 13, 'bold'), command=lambda: show_frame(page1),height=5,width=15)
+pg3_button.place(relx=0.9,rely=0)
+
+pg3_button2 = Button(page1, text='Quit', font=('Arial', 13, 'bold'), command=(quit),height=5,width=15)
+pg3_button2.place(relx=0.9, rely=0)
+
+
+window.mainloop()
