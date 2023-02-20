@@ -1,0 +1,87 @@
+import pygame
+import random
+
+# initialize Pygame
+pygame.init()
+
+# set screen dimensions
+screen_width = 1000
+screen_height = 950
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# set colors
+white = (255, 255, 255)
+blue = (0, 0, 255)
+gray = (150, 150, 150)
+
+# set font
+font = pygame.font.Font(None, 30)
+
+# set grid dimensions
+grid_size = 20
+cell_size = screen_width // grid_size
+
+# create grid
+grid = []
+for row in range(grid_size):
+    grid.append([])
+    for column in range(grid_size):
+        grid[row].append(0)
+
+# randomly place ships
+#ship_sizes = [5, 4, 3, 3, 2]
+#for size in ship_sizes:
+#    while True:
+#        orientation = random.choice(['horizontal', 'vertical'])
+#        if orientation == 'horizontal':
+#            row = random.randint(0, grid_size - 1)
+#            column = random.randint(0, grid_size - size)
+#            if 0 not in grid[row][column:column+size]:
+#                continue
+#            for i in range(column, column+size):
+#              grid[row][i] = size
+#            break
+#        else:
+#            row = random.randint(0, grid_size - size)
+#            column = random.randint(0, grid_size - 1)
+#            if 0 not in [grid[i][column] for i in range(row, row+size)]:
+#                continue
+#            for i in range(row, row+size):
+#                grid[i][column] = size
+#            break
+
+# main game loop
+running = True
+while running:
+    # handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    # clear screen
+    screen.fill('black')
+    
+    # draw grid
+    for row in range(grid_size):
+        for column in range(grid_size):
+            rect = pygame.Rect(column * cell_size, row * cell_size, cell_size, cell_size)
+            pygame.draw.rect(screen, 'green', rect, 1)
+            if grid[row][column] > 0:
+                if grid[row][column] == 1:
+                    color = 'green'
+                else:
+                    color = white
+                pygame.draw.circle(screen, color, (column * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 3)
+    
+    # draw labels
+    for i in range(grid_size):
+        text = font.render(str(i+1), True, 'green')
+        screen.blit(text, (i * cell_size + cell_size // 2 - text.get_width() // 2, 0))
+        text = font.render(chr(ord('A') + i), True, 'green')
+        screen.blit(text, (0, i * cell_size + cell_size // 2 - text.get_height() // 2))
+    
+    # update screen
+    pygame.display.update()
+
+# quit Pygame
+pygame.quit()
